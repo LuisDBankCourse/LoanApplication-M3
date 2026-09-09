@@ -1,0 +1,20 @@
+## Build results
+[Bb]in/
+[Oo]bj/
+/packages/
+/_ReSharper.Caches/
+
+## IDE and editor caches
+.idea/
+.vs/
+*.user
+*.suo
+riderModule.iml
+
+## macOS system files
+.DS_Store
+
+## Local configuration and secrets
+appsettings.Development.json
+appsettings.*.local.json
+secrets.json
