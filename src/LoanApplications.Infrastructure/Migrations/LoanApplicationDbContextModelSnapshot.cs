@@ -46,7 +46,7 @@ namespace LoanApplications.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<DateTime>("EvaluatedAtUtc")
+                    b.Property<DateTime?>("EvaluatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("IdempotencyKey")
@@ -105,8 +105,8 @@ namespace LoanApplications.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Error")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasMaxLength(7000)
+                        .HasColumnType("character varying(7000)");
 
                     b.Property<string>("EventType")
                         .IsRequired()
@@ -117,7 +117,7 @@ namespace LoanApplications.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ProcessedAtUtc")
+                    b.Property<DateTime?>("ProcessedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("RetryCount")

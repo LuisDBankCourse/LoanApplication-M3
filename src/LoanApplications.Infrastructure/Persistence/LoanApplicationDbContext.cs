@@ -75,7 +75,7 @@ public class LoanApplicationDbContext : DbContext
                 .IsRequired();
 
             e.Property(e => e.Error)
-                .HasMaxLength(500);
+                .HasMaxLength(7000);
 
             e.HasIndex(x => x.ProcessedAtUtc)
                 .HasDatabaseName("IX_OutBox_ProcessedAtUtc");

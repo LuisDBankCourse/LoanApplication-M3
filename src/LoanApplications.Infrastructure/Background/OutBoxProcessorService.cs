@@ -35,7 +35,7 @@ public class OutBoxProcessorService : BackgroundService
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex,"An exception occurred in OutBox Processor Service.");
+                _logger.LogError(ex, "An exception occurred in OutBox Processor Service.");
             }
             await Task.Delay(_interval, stoppingToken);
         }
@@ -69,14 +69,11 @@ public class OutBoxProcessorService : BackgroundService
             catch (Exception e)
             {
                 message.MarkAsFailed(e.Message);
-                
-                _logger.LogError(e,"Outbox message failed. MessageId:{MessageId}, RetryCount = {RetryCount}", message.Id, message.RetryCount);
-                throw;
+                _logger.LogError(e, "Outbox message failed. MessageId:{MessageId}, RetryCount = {RetryCount}", message.Id, message.RetryCount);
             }
         }
 
         await outBoxRepo.SaveChangesAsync(ct);
-
     }
     
     

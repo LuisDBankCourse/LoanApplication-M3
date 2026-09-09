@@ -70,7 +70,7 @@ public class CreateLoanApplicationHandler : IRequestHandler<CreateLoanApplicatio
             application.Id,
             application.RequestedAmount,
             application.Status.ToString(),
-            "Solicitud registrado exitosamente",
+            "Application registered successfully",
             request.CorrelationId));
     }
     

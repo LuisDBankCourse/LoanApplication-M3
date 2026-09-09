@@ -23,7 +23,7 @@ builder.Host.UseSerilog((ctx, services, config) => config
     .ReadFrom.Configuration(ctx.Configuration)
     .ReadFrom.Services(services)
     .Enrich.FromLogContext()
-    .Enrich.WithProperty("Service", "CreditProducts.Api")
+    .Enrich.WithProperty("Service", "LoanApplication.Api")
     .WriteTo.Console(
         outputTemplate:
         "[{Timestamp:HH:mm:ss} {Level:u3}] {Service} | CorrelationId={CorrelationId} | {Message:lj}{Newline}{Exception}"));
@@ -41,7 +41,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference(options => options.WithTitle("CreditProducts API")
+    app.MapScalarApiReference(options => options.WithTitle("LoanApplication API")
         .WithTheme(ScalarTheme.Kepler)
         .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
     );

@@ -18,3 +18,4 @@ riderModule.iml
 appsettings.Development.json
 appsettings.*.local.json
 secrets.json
+.local/

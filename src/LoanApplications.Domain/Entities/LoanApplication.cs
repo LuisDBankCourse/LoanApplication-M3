@@ -21,7 +21,7 @@ public class LoanApplication
     public string? RiskLevel { get; set; }
     public string? DecisionReason { get; set; }
     public DateTime CreatedAtUtc { get; set; }
-    public DateTime EvaluatedAtUtc { get; set; }
+    public DateTime? EvaluatedAtUtc { get; set; }
     
     public static LoanApplication Create(
         Guid customerId, 
@@ -69,23 +69,23 @@ public class LoanApplication
 
     public void ApplyDecision(int score, string riskLevel, string decision, string reason, string correlationId)
     {
-        if (Status == LoanApplicationStatus.PendingEvaluation)
+        if (Status != LoanApplicationStatus.PendingEvaluation)
             throw new InvalidLoanApplicationStateException(Id, Status, "ApplyDecision");
-        
         
         ArgumentException.ThrowIfNullOrWhiteSpace(riskLevel);
         ArgumentException.ThrowIfNullOrWhiteSpace(decision);
         ArgumentException.ThrowIfNullOrWhiteSpace(reason);
+        ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);
         
-        if(Enum.TryParse<LoanApplicationStatus>(decision, out var newStatus))
-            throw new ArgumentException($"Decision {decision} is not valid for some status from LoanApplicationStatus", nameof(decision));
+        if (!Enum.TryParse<LoanApplicationStatus>(decision, true, out var newStatus))
+            throw new ArgumentException($"Decision {decision} is not valid for LoanApplicationStatus", nameof(decision));
 
-        if (newStatus is not(LoanApplicationStatus.PreApproved
+        if (newStatus is not (LoanApplicationStatus.PreApproved
             or LoanApplicationStatus.ManualReview
             or LoanApplicationStatus.Rejected
             or LoanApplicationStatus.Failed))
         {
-            throw new ArgumentException($"Decision is valid", nameof(newStatus));
+            throw new ArgumentException($"Status {newStatus} is not an allowed decision status", nameof(decision));
         }
         
         Score = score;

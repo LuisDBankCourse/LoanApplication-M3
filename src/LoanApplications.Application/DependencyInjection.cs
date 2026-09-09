@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using LoanApplications.Application.Commands;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LoanApplications.Application;
@@ -9,7 +10,7 @@ public static class DependencyInjection
     {
         services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
 
-        //services.AddValidatorsFromAssemblyContaining()<CreateLoanApplicationValidator>();
+        services.AddValidatorsFromAssemblyContaining<CreateLoanApplicationValidator>();
 
         return services;
     }

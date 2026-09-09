@@ -7,7 +7,7 @@ public class OutBoxMessage
     public string Payload { get; set; }
     public string CorrelationId { get; set; }
     public DateTime CreatedAtUtc { get; set; }
-    public DateTime ProcessedAtUtc { get; set; }
+    public DateTime? ProcessedAtUtc { get; set; }
     public string? Error  { get; set; }
     public int RetryCount { get; set; }
 
