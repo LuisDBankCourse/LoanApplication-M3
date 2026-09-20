@@ -1,0 +1,11 @@
+services:
+  loanapplications.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "8084:8080"
+      - "8085:8081"
+    volumes:
+      - ~/.aspnet/https:/https/certs:ro
