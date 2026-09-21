@@ -62,6 +62,7 @@ steps:
 
     secretArguments: >
       --from-literal=LoanApplicationConnection="$(LoanApplicationConnection)"
+      --from-literal=ServiceBusConnection="$(ServiceBusConnection)"
 
 - task: KubernetesManifest@1
   inputs:

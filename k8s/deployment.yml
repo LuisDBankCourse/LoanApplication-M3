@@ -31,6 +31,11 @@ spec:
                 secretKeyRef:
                   name: loanapplicationapi-secrets
                   key: LoanApplicationConnection
+            - name: ConnectionStrings__ServiceBusConnection
+              valueFrom:
+                secretKeyRef:
+                  name: loanapplicationapi-secrets
+                  key: ServiceBusConnection
                   
           resources:
             requests:
