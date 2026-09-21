@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: loanapplicationapi
+  namespace: prod
+  labels:
+    app: loanapplicationapi
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: loanapplicationapi
+
+  template:
+    metadata:
+      labels:
+        app: loanapplicationapi
+    spec:
+      containers:
+        - name: loanapplicationapi
+          image: 'creditflowacrdvid.azurecr.io/loanapplicationapi:latest'
+          ports:
+            - containerPort: 8080
+
+          env:
+            - name: ConnectionStrings__LoanApplicationConnection
+              valueFrom:
+                secretKeyRef:
+                  name: loanapplicationapi-secrets
+                  key: LoanApplicationConnection
+                  
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"

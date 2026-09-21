@@ -5,12 +5,12 @@
 
 trigger:
 - main
-- dev
 
 pool:
   vmImage: ubuntu-latest
 
 variables:
+- group: LOANAPPLICATIONAPI
 - name: imagetag
   value: '$(Build.BuildId)'
 
@@ -22,7 +22,7 @@ steps:
     azureSubscription: 'Azure subscription 1(6940fc78-e8c0-4d97-96cd-b6b824327fcc)'
     azureContainerRegistry: '{"loginServer":"creditflowacrdvid.azurecr.io", "id" : "/subscriptions/6940fc78-e8c0-4d97-96cd-b6b824327fcc/resourceGroups/CursoDavidCreditFlow/providers/Microsoft.ContainerRegistry/registries/creditflowacrdvid"}'
     dockerComposeFile: '**/docker-compose.yml'
-    projectName: 'loanapplicationsapi'
+    projectName: 'loanapplicationapi'
     action: 'Build services'
     qualifyImageNames: true
 
@@ -39,7 +39,7 @@ steps:
     azureSubscription: 'Azure subscription 1(6940fc78-e8c0-4d97-96cd-b6b824327fcc)'
     azureContainerRegistry: '{"loginServer":"creditflowacrdvid.azurecr.io", "id" : "/subscriptions/6940fc78-e8c0-4d97-96cd-b6b824327fcc/resourceGroups/CursoDavidCreditFlow/providers/Microsoft.ContainerRegistry/registries/creditflowacrdvid"}'
     dockerComposeFile: '**/docker-compose.yml'
-    projectName: 'loanapplicationsapi'
+    projectName: 'loanapplicationapi'
     action: 'Push services'
 
     qualifyImageNames: true
@@ -50,3 +50,27 @@ steps:
       $(imagetag)
 
     includeLatestTag: true
+
+- task: KubernetesManifest@1
+  inputs:
+    action: 'createSecret'
+    connectionType: 'kubernetesServiceConnection'
+    kubernetesServiceConnection: 'aks-creditflow-connection'
+    namespace: 'prod'
+    secretType: 'generic'
+    secretName: 'loanapplicationapi-secrets'
+
+    secretArguments: >
+      --from-literal=LoanApplicationConnection="$(LoanApplicationConnection)"
+
+- task: KubernetesManifest@1
+  inputs:
+    action: 'deploy'
+    connectionType: 'kubernetesServiceConnection'
+    kubernetesServiceConnection: 'aks-creditflow-connection'
+    namespace: 'prod'
+    manifests: |
+      $(Build.SourcesDirectory)/k8s/deployment.yml
+      $(Build.SourcesDirectory)/k8s/service.yml
+    containers: 'creditflowacrdvid.azurecr.io/loanapplicationapi:$(imagetag)'
+    rolloutStatusTimeout: '300'

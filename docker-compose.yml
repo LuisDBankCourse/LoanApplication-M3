@@ -1,6 +1,6 @@
 services:
   loanapplications.api:
-    image: ${DOCKER_REGISTRY-}loanapplicationsapi
+    image: ${DOCKER_REGISTRY-}loanapplicationapi
     build:
       context: .
       dockerfile: src/LoanApplications.Api/Dockerfile
