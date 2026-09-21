@@ -52,6 +52,7 @@ steps:
     includeLatestTag: true
 
 - task: KubernetesManifest@1
+  displayName: 'Create Secret to aks'
   inputs:
     action: 'createSecret'
     connectionType: 'kubernetesServiceConnection'
@@ -65,6 +66,7 @@ steps:
       --from-literal=ServiceBusConnection="$(ServiceBusConnection)"
 
 - task: KubernetesManifest@1
+  displayName: 'Deploy to AKS'
   inputs:
     action: 'deploy'
     connectionType: 'kubernetesServiceConnection'
