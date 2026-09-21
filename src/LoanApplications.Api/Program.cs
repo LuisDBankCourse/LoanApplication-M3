@@ -38,14 +38,14 @@ builder.Services.AddApplication();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapScalarApiReference(options => options.WithTitle("LoanApplication API")
-        .WithTheme(ScalarTheme.Kepler)
-        .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
-    );
-}
+/*if (app.Environment.IsDevelopment())
+{*/
+app.MapOpenApi();
+app.MapScalarApiReference(options => options.WithTitle("LoanApplication API")
+    .WithTheme(ScalarTheme.Kepler)
+    .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
+);
+//}
 
 app.UseHttpsRedirection();
 
