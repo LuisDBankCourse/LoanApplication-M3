@@ -36,7 +36,6 @@ spec:
                 secretKeyRef:
                   name: loanapplicationapi-secrets
                   key: ServiceBusConnection
-                  
           resources:
             requests:
               memory: "128Mi"
